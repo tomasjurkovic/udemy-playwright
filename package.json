@@ -1,0 +1,15 @@
+{
+  "name": "udemy-playwright",
+  "version": "1.0.0",
+  "description": "the automated software testing with playwright tool",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tomas Jurkovic",
+  "license": "ISC",
+  "dependencies": {
+    "@playwright/test": "^1.27.1",
+    "prettier": "^2.7.1"
+  }
+}
