@@ -11,3 +11,5 @@ npx run playwright --headed --browser=all - runs all tests with opening browser 
 
 npx playwright test --grep @myFirstTag - runs only those test which has tag @myFirstTag
 npx playwright test --grep-invert  @myFirstTag - runs only those test which has not got tag @myFirstTag
+
+npx playwright test --config=playwright.config.ts --project=Webkit - runs all test using config which was defined in mentioned file
