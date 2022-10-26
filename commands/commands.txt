@@ -13,3 +13,12 @@ npx playwright test --grep @myFirstTag - runs only those test which has tag @myF
 npx playwright test --grep-invert  @myFirstTag - runs only those test which has not got tag @myFirstTag
 
 npx playwright test --config=playwright.config.ts --project=Webkit - runs all test using config which was defined in mentioned file
+
+types of reports:
+npx playwright test --config=playwright.config.ts --project=Chromium
+and then one of these:
+--reporter=list - default one, that playwright uses
+--reporter=dot - only green/red dots
+--reporter=dot - only data in one row are reported, not very useful
+--reporter=junit - it will create xml format, which can be extracted or used in monitoring services
+--reporter=html = it exports html report, which is clicable and gives most details, good one for debugging
