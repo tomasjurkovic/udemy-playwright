@@ -41,6 +41,30 @@ test("Working with inputs test", async  ({ page }) => {
     await expect(singInError).toContainText("Login and/or password are wrong.")
 }) 
 
+test("Assertion examples test", async  ({ page }) => {
+    
+    // go to test page
+    await page.goto("http://example.com");
+
+    // assert the correct url:
+    await expect(page).toHaveURL("http://example.com");
+
+    // assert the correct page's title:
+    await expect(page).toHaveTitle("Example Domain");
+
+    const elementH1 = await page.locator("h1");
+    // chcek if element is correctly displayed:
+    await expect(elementH1).toBeVisible()
+    // if text of the element equals:
+    await expect(elementH1).toHaveText("Example Domain")
+    // if it is visible only once:
+    await expect(elementH1).toHaveCount(1) 
+
+    const nonExistingElement = await page.locator("h5");
+    // non visible assertion:
+    await expect(nonExistingElement).not.toBeVisible();
+}) 
+
 // test("Selectors", async({ page }) => {
 
 //     // this is just a example of selecting elements, no real test
