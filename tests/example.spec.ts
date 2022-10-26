@@ -23,7 +23,7 @@ test.describe("My first test suite", () => {
         await expect(singInError).toContainText("Login and/or password are wrong.")
     }) 
     
-    test("Working with inputs test", async  ({ page }) => {
+    test("Working with inputs test @myFirstTag", async  ({ page }) => {
         
         // go to test page
         await page.goto("http://zero.webappsecurity.com/index.html");
@@ -43,7 +43,7 @@ test.describe("My first test suite", () => {
     }) 
 })
 
-test("Assertion examples test", async  ({ page }) => {
+test("Assertion examples test @myFirstTag", async  ({ page }) => {
     
     // go to test page
     await page.goto("http://example.com");
