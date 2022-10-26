@@ -67,27 +67,34 @@ test("Assertion examples test @myFirstTag", async  ({ page }) => {
     await expect(nonExistingElement).not.toBeVisible();
 }) 
 
-test("Full page screenshot test @screenshot", async  ({ page }) => {
+test.describe.only("Hooks @screenshot", () => {
+
+    test.beforeEach(async ({ page }) => {
+        // this runs before each test, 
+        // same is also for afterEach
+        // and playwright recognizes beforeAll and afterAll as well
+
+        // 1. step is load website
+        await page.goto("http://example.com");
+    }) 
+
+    test("Full page screenshot test", async  ({ page }) => {
     
-    // 1. step is load website
-    await page.goto("http://example.com");
-
-    // 2. step is take screenshot of full page:
-    await page.screenshot({ path: "screenshot.png", fullPage: true})
-
-}) 
-
-test("Single element screenshot test @screenshot", async  ({ page }) => {
+        // 2. step is take screenshot of full page:
+        await page.screenshot({ path: "screenshot.png", fullPage: true})
     
-    // 1. step is load website
-    await page.goto("http://example.com");
+    }) 
+    
+    test("Single element screenshot test", async  ({ page }) => {
+    
+        const element = await page.$("h1");
+    
+        // 2. step is take screenshot of full page:
+        await element.screenshot({ path: "h1_screenshot.png" })
+    
+    }) 
+})
 
-    const element = await page.$("h1");
-
-    // 2. step is take screenshot of full page:
-    await element.screenshot({ path: "h1_screenshot.png" })
-
-}) 
 
 // test("Selectors", async({ page }) => {
 
