@@ -51,7 +51,7 @@ test("Assertion examples test @myFirstTag", async  ({ page }) => {
     await loadHomePage(page)
 
     // assert the correct url:
-    await expect(page).toHaveURL("http://example.com");
+    await expect(page).toHaveURL("https://www.example.com");
 
     // assert the correct page's title:
     await expect(page).toHaveTitle("Example Domain");
@@ -69,7 +69,7 @@ test("Assertion examples test @myFirstTag", async  ({ page }) => {
     await expect(nonExistingElement).not.toBeVisible();
 }) 
 
-test.describe.only("Hooks @screenshot", () => {
+test.describe("Hooks @screenshot", () => {
 
     test.beforeEach(async ({ page }) => {
         // this runs before each test, 

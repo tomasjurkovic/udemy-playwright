@@ -5,7 +5,7 @@ export async function loadHomePage(page) {
 }
 
 export async function assertTitle(page) {
-    const title = await page.waitForSelector('h1')
+    const title = await page.locator('h1')
 
     await expect(title).toHaveText("Example Domain")
 }
