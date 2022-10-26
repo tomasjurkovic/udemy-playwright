@@ -1,5 +1,7 @@
 import { test, expect } from '@playwright/test'
 
+import { loadHomePage, assertTitle } from '../helpers'
+
 test("Simple basic test", async  ({ page }) => {
     
     // go to example.com
@@ -46,7 +48,7 @@ test.describe("My first test suite", () => {
 test("Assertion examples test @myFirstTag", async  ({ page }) => {
     
     // go to test page
-    await page.goto("http://example.com");
+    await loadHomePage(page)
 
     // assert the correct url:
     await expect(page).toHaveURL("http://example.com");
@@ -58,7 +60,7 @@ test("Assertion examples test @myFirstTag", async  ({ page }) => {
     // chcek if element is correctly displayed:
     await expect(elementH1).toBeVisible()
     // if text of the element equals:
-    await expect(elementH1).toHaveText("Example Domain")
+    await assertTitle(page)
     // if it is visible only once:
     await expect(elementH1).toHaveCount(1) 
 
@@ -75,7 +77,7 @@ test.describe.only("Hooks @screenshot", () => {
         // and playwright recognizes beforeAll and afterAll as well
 
         // 1. step is load website
-        await page.goto("http://example.com");
+        await loadHomePage(page);
     }) 
 
     test("Full page screenshot test", async  ({ page }) => {
@@ -90,7 +92,7 @@ test.describe.only("Hooks @screenshot", () => {
         const element = await page.$("h1");
     
         // 2. step is take screenshot of full page:
-        await element.screenshot({ path: "h1_screenshot.png" })
+        // await element.screenshot({ path: "h1_screenshot.png" })
     
     }) 
 })
