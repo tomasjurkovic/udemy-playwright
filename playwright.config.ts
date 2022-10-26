@@ -10,8 +10,8 @@ const config: PlaywrightTestConfig = {
         },
         actionTimeout: 15000,
         ignoreHTTPSErrors: true,
-        video: "off",
-        screenshot: "off",
+        video: 'retain-on-failure',
+        screenshot: "only-on-failure"
     },
     projects: [
         {
