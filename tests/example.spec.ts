@@ -11,35 +11,37 @@ test("Simple basic test", async  ({ page }) => {
 
 }) 
 
-test("Clicking on elements test", async  ({ page }) => {
+test.describe("My first test suite", () => {
+    test("Clicking on elements test", async  ({ page }) => {
     
-    // go to test page
-    await page.goto("http://zero.webappsecurity.com/index.html");
-    await page.click("#signin_button")
-    await page.click("text=Sign in")
-
-    const singInError = page.locator(".alert-error")
-    await expect(singInError).toContainText("Login and/or password are wrong.")
-}) 
-
-test("Working with inputs test", async  ({ page }) => {
+        // go to test page
+        await page.goto("http://zero.webappsecurity.com/index.html");
+        await page.click("#signin_button")
+        await page.click("text=Sign in")
     
-    // go to test page
-    await page.goto("http://zero.webappsecurity.com/index.html");
-    await page.click("#signin_button")
-
-    // fill username:
-    await page.type("#user_login", "some username")
-
-    // fill password:
-    await page.type("#user_password", "some password")
-
-    // click on 'Sign in' button
-    await page.click("text=Sign in")
-
-    const singInError = page.locator(".alert-error")
-    await expect(singInError).toContainText("Login and/or password are wrong.")
-}) 
+        const singInError = page.locator(".alert-error")
+        await expect(singInError).toContainText("Login and/or password are wrong.")
+    }) 
+    
+    test("Working with inputs test", async  ({ page }) => {
+        
+        // go to test page
+        await page.goto("http://zero.webappsecurity.com/index.html");
+        await page.click("#signin_button")
+    
+        // fill username:
+        await page.type("#user_login", "some username")
+    
+        // fill password:
+        await page.type("#user_password", "some password")
+    
+        // click on 'Sign in' button
+        await page.click("text=Sign in")
+    
+        const singInError = page.locator(".alert-error")
+        await expect(singInError).toContainText("Login and/or password are wrong.")
+    }) 
+})
 
 test("Assertion examples test", async  ({ page }) => {
     
