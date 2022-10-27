@@ -27,7 +27,7 @@ test.describe.parallel("Login / Logout flow", () => {
         await page.click("text=Sign in")
 
         // this is really needed because of the SSL error:
-        await page.goto("http://zero.webappsecurity.com/bank/account-summary.html")
+        await page.goto("http://zero.webappsecurity.com/bank/transfer-funds.html")
         
         // assert if user is logged in by checking one of the element's text:
         const accountSummaryTab = await page.locator("#account_summary_tab")
