@@ -69,7 +69,9 @@ test("Assertion examples test @myFirstTag", async  ({ page }) => {
     await expect(nonExistingElement).not.toBeVisible();
 }) 
 
-test.describe("Hooks @screenshot", () => {
+test.describe.parallel.only("Hooks @screenshot", () => {
+
+    // .parallel allows us to run these tests in the same time
 
     test.beforeEach(async ({ page }) => {
         // this runs before each test, 
