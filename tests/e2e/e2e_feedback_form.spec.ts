@@ -50,6 +50,9 @@ test.describe.parallel("Feedback Form", () => {
         // check if user is redirected to correct url
         await expect(page).toHaveURL("http://zero.webappsecurity.com/sendFeedback.html")
 
+        // wait for selector command (shortened version of our next 4 lines of code):
+        await page.waitForSelector("#feedback-title")
+
         // create feedback message locator:
         const confirmMessage = await page.locator(".offset3")
 
