@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test'
 import { loadTestHomePage } from '../../helpers'
 
-test.describe.only('Transfer funds test', () => {
+test.describe.parallel('Transfer funds test', () => {
 
     // before each hook using login:
 
