@@ -34,6 +34,19 @@ test.describe.only('Transfer funds test', () => {
         // check page's changed URL 
         await expect(page).toHaveURL("http://zero.webappsecurity.com/bank/transfer-funds-verify.html")
 
+        // check board header if contains 'verify' word
+        const boardHeader = await page.locator("h2.board-header")
+        const fromAccountField = await page.locator("#tf_fromAccountId")
+        const toAccountField = await page.locator("#tf_toAccountId")
+        const amountField = await page.locator("#tf_amount")
+        const descriptionField = await page.locator("#tf_description")
+
+        await expect(boardHeader).toContainText("Verify")
+        await expect(fromAccountField).toHaveValue("Checking")
+        await expect(toAccountField).toHaveValue("Loan")
+        await expect(amountField).toHaveValue("1000")
+        await expect(descriptionField).toHaveValue("Go & buy some Bitcoin.")
+
         // submit the form second time after verification:
         await page.click("#btn_submit")
 
