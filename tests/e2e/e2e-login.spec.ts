@@ -14,21 +14,16 @@ test.describe.parallel("Login / Logout flow", () => {
     // negative scenario:
     test("Negative scenario for login", async ({ page }) => {
         await page.click('#signin_button')
-        await page.type("#user_login", "invalid user name")
-        await page.type("#user_password", "invalid password")
-        await page.click("text=Sign in")
+        await loginPage.login("invalid_username", "invalid_password")
 
         // assert error message:
-        const errorMessage = await page.locator('.alert-error')
-        await expect(errorMessage).toContainText("Login and/or password are wrong")
+        await loginPage.assertErrorMessage()
     })
     
     // positive scenario + logout:
     test("Positive scenario for login + logout", async ({page}) => {
         await page.click('#signin_button')
-        await page.type("#user_login", "username")
-        await page.type("#user_password", "password")
-        await page.click("text=Sign in")
+        await loginPage.login("username", "password")
 
         // this is really needed because of the SSL error:
         await page.goto("http://zero.webappsecurity.com/bank/transfer-funds.html")
