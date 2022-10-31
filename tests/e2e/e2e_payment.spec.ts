@@ -42,10 +42,32 @@ test.describe.parallel.only("New Payment test", async () => {
         await page.click("#pay_saved_payees")
 
         // check if success message appears on the screen:
-        const successMessage = await page.locator("#alert_content span")
+        const successMessage = await page.locator("#alert_content > span")
+        await expect(successMessage).toBeVisible()
         await expect(successMessage).toHaveText("The payment was successfully submitted.")
-
     })
     
+    test("Should add new payee",async ({ page }) => {
+        // go to Pay Bills tab:
+        await page.goto("http://zero.webappsecurity.com/bank/pay-bills.html") 
+
+        // click on 'add new payee' tab
+        await page.click(".ui-tabs-nav a[href$='#ui-tabs-2']")
+
+        // fill 4 inputs:
+        const payeeName = "Test Payee"
+        await page.type("#np_new_payee_name", payeeName)  // payee name
+        await page.type("#np_new_payee_address", "Wall Street 5, New York") // payee address
+        await page.type("#np_new_payee_account", "Test Account")  // account
+        await page.type("#np_new_payee_details", "Test Payee")  // payee details
+
+        // click on 'Add' button:
+        await page.click("#add_new_payee")
+
+        // check if success message appears on the screen:
+        const successMessage = await page.locator("#alert_content")
+        await expect(successMessage).toBeVisible()
+        await expect(successMessage).toHaveText("The new payee " + payeeName + " was successfully created.")
+    })
 
 })
