@@ -25,6 +25,8 @@ export class HomePage {
 
     async search(searchCriteria: string) {
         await this.searchInput.type(searchCriteria)
+        // simulating using enter from keyboard
+        await this.page.keyboard.press('Enter')
     }
 }
 

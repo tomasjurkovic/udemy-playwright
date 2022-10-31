@@ -15,9 +15,6 @@ test.describe.parallel.only("Search results", () => {
         // type into the search field:
         await homePage.search(searchCriteria)
 
-        // simulating using enter from keyboard
-        await page.keyboard.press('Enter')
-
         // check page's URL
         await expect(page).toHaveURL("http://zero.webappsecurity.com/search.html?searchTerm=Bank")
 
@@ -39,9 +36,6 @@ test.describe.parallel.only("Search results", () => {
         const searchCriteria = "Not Found"
         // type into the search field:
         await homePage.search(searchCriteria)
-
-        // simulating using enter from keyboard
-        await page.keyboard.press('Enter')
 
         // check page's URL
         await expect(page).toHaveURL("http://zero.webappsecurity.com/search.html?searchTerm=Not+Found")
