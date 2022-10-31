@@ -1,7 +1,7 @@
 import { expect, Locator, Page } from "@playwright/test";
 
 export class LoginPage {
-    // Selectores definition:
+    // Selectors' definition:
     readonly page: Page
     readonly usernameInput: Locator
     readonly passwordInput: Locator
@@ -18,10 +18,6 @@ export class LoginPage {
     }
 
     // Define login page methods:
-    async loadHomePage() {
-        await this.page.goto("http://zero.webappsecurity.com/index.html")
-    }
-
     async login(username:string, password: string) {
         await this.usernameInput.type(username)
         await this.passwordInput.type(password)
