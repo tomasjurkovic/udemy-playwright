@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test'
 import { HomePage } from '../../page-objects/HomePage'
 import { SearchPage } from '../../page-objects/SearchPage'
 
-test.describe.parallel.only("Search results", () => {
+test.describe.parallel("Search results", () => {
     let homePage: HomePage
     let searchPage: SearchPage
     
