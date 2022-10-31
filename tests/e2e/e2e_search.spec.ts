@@ -1,17 +1,19 @@
 import { test, expect } from '@playwright/test'
-import { loadTestHomePage } from '../../helpers'
+import { HomePage } from '../../page-objects/HomePage'
 
-test.describe.parallel("Search results", () => {
+test.describe.parallel.only("Search results", () => {
+    let homePage: HomePage
     
     test.beforeEach(async ({ page }) => {
-        await loadTestHomePage(page)
+        homePage = new HomePage(page)
+        await homePage.loadHomePage()
     })
 
     test("Should find search results",async ({ page }) => {
         
         const searchCriteria = "Bank"
         // type into the search field:
-        await page.type("#searchTerm", searchCriteria)
+        await homePage.search(searchCriteria)
 
         // simulating using enter from keyboard
         await page.keyboard.press('Enter')
@@ -36,7 +38,7 @@ test.describe.parallel("Search results", () => {
         
         const searchCriteria = "Not Found"
         // type into the search field:
-        await page.type("#searchTerm", searchCriteria)
+        await homePage.search(searchCriteria)
 
         // simulating using enter from keyboard
         await page.keyboard.press('Enter')
