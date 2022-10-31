@@ -1,10 +1,14 @@
 import { test, expect } from "@playwright/test";
-import { loadTestHomePage, logoutFromTestPage } from "../../helpers";
+import { logoutFromTestPage } from "../../helpers";
+import { LoginPage } from "../../page-objects/LoginPage";
 
 test.describe.parallel("Login / Logout flow", () => {
+    let loginPage: LoginPage
     // before hook:
     test.beforeEach(async ({ page}) => {
-        await loadTestHomePage(page)        
+        loginPage = new LoginPage(page)
+           
+        await loginPage.loadHomePage()
     })
 
     // negative scenario:
