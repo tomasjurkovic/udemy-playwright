@@ -1,11 +1,14 @@
 import { test, expect } from '@playwright/test'
 import { HomePage } from '../../page-objects/HomePage'
+import { SearchPage } from '../../page-objects/SearchPage'
 
 test.describe.parallel.only("Search results", () => {
     let homePage: HomePage
+    let searchPage: SearchPage
     
     test.beforeEach(async ({ page }) => {
         homePage = new HomePage(page)
+        searchPage = new SearchPage(page)
         await homePage.loadHomePage()
     })
 
@@ -13,38 +16,29 @@ test.describe.parallel.only("Search results", () => {
         
         const searchCriteria = "Bank"
         // type into the search field:
-        await homePage.search(searchCriteria)
+        await homePage.searchFor(searchCriteria)
 
         // check page's URL
         await expect(page).toHaveURL("http://zero.webappsecurity.com/search.html?searchTerm=Bank")
 
-        const numerOfLinks = await page.locator("li > a")
-        const firstLink = await page.locator("ul> li:first-child > a")
-        const secondLink = await page.locator("ul> li:last-child > a")
-
         // check number of search results found:
-        await expect(numerOfLinks).toHaveCount(2)
+        await searchPage.assertNumberOfRecords(2)
 
         // check if they contain search criteria's text as well - non-strict assert:
-        await expect(firstLink).toContainText(searchCriteria)
-        await expect(secondLink).toContainText(searchCriteria)
-
+        await searchPage.assertFirstResultText(searchCriteria)
+        await searchPage.assertLastResultText(searchCriteria)
     })
 
     test("Should not find any search results",async ({ page }) => {
         
         const searchCriteria = "Not Found"
         // type into the search field:
-        await homePage.search(searchCriteria)
+        await homePage.searchFor(searchCriteria)
 
         // check page's URL
         await expect(page).toHaveURL("http://zero.webappsecurity.com/search.html?searchTerm=Not+Found")
 
         // check number of search results found:
-        const searchResultMessage = await page.locator(".top_offset")
-
-        await expect(searchResultMessage).toContainText("No results were found for the query: " + searchCriteria)
-
-
+        await searchPage.confirmThatNoResultsWereFound(searchCriteria)
     })
 })
