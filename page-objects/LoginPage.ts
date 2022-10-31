@@ -18,4 +18,7 @@ export class LoginPage {
     }
 
     // Define login page methods:
+    async loadHomePage() {
+        await this.page.goto("http://zero.webappsecurity.com/index.html")
+   }
 }
