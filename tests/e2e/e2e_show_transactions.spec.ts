@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { loadTestHomePage } from "../../helpers";
 
-test.describe.parallel.only("Show Transaction tests", async () => {
+test.describe.parallel("Show Transaction tests", async () => {
     
     test.beforeEach(async ({ page }) => {
         await loadTestHomePage(page)
