@@ -1,19 +1,22 @@
 import { test, expect } from "@playwright/test";
 import { logoutFromTestPage } from "../../helpers";
+import { HomePage } from "../../page-objects/HomePage";
 import { LoginPage } from "../../page-objects/LoginPage";
 
 test.describe.parallel("Login / Logout flow", () => {
+    let homePage: HomePage
     let loginPage: LoginPage
     // before hook:
     test.beforeEach(async ({ page}) => {
+        homePage = new HomePage(page)
         loginPage = new LoginPage(page)
            
-        await loginPage.loadHomePage()
+        await homePage.loadHomePage()
     })
 
     // negative scenario:
     test("Negative scenario for login", async ({ page }) => {
-        await page.click('#signin_button')
+        await homePage.clickOnSignInButton()
         await loginPage.login("invalid_username", "invalid_password")
 
         // assert error message:
@@ -22,7 +25,7 @@ test.describe.parallel("Login / Logout flow", () => {
     
     // positive scenario + logout:
     test("Positive scenario for login + logout", async ({page}) => {
-        await page.click('#signin_button')
+        await homePage.clickOnSignInButton()
         await loginPage.login("username", "password")
 
         // this is really needed because of the SSL error:
