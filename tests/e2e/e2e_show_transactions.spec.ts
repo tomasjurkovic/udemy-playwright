@@ -1,15 +1,19 @@
 import { test, expect } from "@playwright/test";
-import { loadTestHomePage } from "../../helpers";
+import { LoginPage } from '../../page-objects/LoginPage';
+import { HomePage } from '../../page-objects/HomePage';
+
 
 test.describe.parallel("Show Transaction tests", async () => {
-    
-    test.beforeEach(async ({ page }) => {
-        await loadTestHomePage(page)
+    let homePage: HomePage
+    let loginPage: LoginPage
 
-        await page.click('#signin_button')
-        await page.type("#user_login", "username")
-        await page.type("#user_password", "password")
-        await page.click("text=Sign in")
+    test.beforeEach(async ({ page }) => {
+        loginPage = new LoginPage(page)
+        homePage = new HomePage(page)
+
+        await homePage.loadHomePage()
+        await homePage.clickOnSignInButton()
+        await loginPage.login("username", "password")  
 
         // navigate to show transaction page:
         await page.goto("http://zero.webappsecurity.com/bank/account-activity.html")
