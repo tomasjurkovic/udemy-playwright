@@ -23,7 +23,7 @@ export class PaymentPage {
         // Add New Payee selectors:
     readonly payeeNameInput: Locator
     readonly payeeAddressInput: Locator
-    readonly accountInput: Locator
+    readonly payeeAccountInput: Locator
     readonly payeeDetailsInput: Locator
         // Add New Payee buttons:
     readonly addButton: Locator
@@ -32,7 +32,7 @@ export class PaymentPage {
 
         // Foreign currency selectors:
     readonly currencySelect: Locator
-    readonly amountInputFC: Locator
+    readonly currencyAmountInput: Locator
     readonly dollarUSDRadio: Locator
     readonly selectedCurrencyRadio: Locator
     readonly sellRateText: Locator
@@ -66,13 +66,13 @@ export class PaymentPage {
 
         this.payeeNameInput = page.locator("#np_new_payee_name")
         this.payeeAddressInput = page.locator("#np_new_payee_address")
-        this.accountInput = page.locator("#np_new_payee_account")
+        this.payeeAccountInput = page.locator("#np_new_payee_account")
         this.payeeDetailsInput = page.locator("#np_new_payee_details")
         this.addButton = page.locator("#add_new_payee")
         this.newPayeeSuccessMessage = page.locator("#alert_content")
 
         this.currencySelect = page.locator("#pc_currency")
-        this.accountInput = page.locator("#pc_amount")
+        this.currencyAmountInput = page.locator("#pc_amount")
         this.dollarUSDRadio = page.locator(".radio #pc_inDollars_true")
         this.selectedCurrencyRadio = page.locator(".radio #pc_inDollars_false")
         this.sellRateText = page.locator(".help-block > strong")
@@ -159,7 +159,7 @@ export class PaymentPage {
         ) {
             await this.payeeNameInput.type(name)
             await this.payeeAddressInput.type(address)
-            await this.accountInput.type(account)
+            await this.payeeAccountInput.type(account)
             await this.payeeDetailsInput.type(details)
     }
 
@@ -182,7 +182,7 @@ export class PaymentPage {
     }
 
     async fillAmountForeginCurrency(price: string) {
-        await this.amountInputFC.type(price)
+        await this.currencyAmountInput.type(price)
     }
 
     async selectDollarCurrency(dollar: boolean = true) {
@@ -195,6 +195,10 @@ export class PaymentPage {
     
     async clickOnCalculateCosts() {
         await this.calculateCostsButton.click()        
+    }
+
+    async clickOnPurchaseButton() {
+        await this.purchaseButton.click()
     }
 
     async assertTodaysSellRate(sellrate: string) {

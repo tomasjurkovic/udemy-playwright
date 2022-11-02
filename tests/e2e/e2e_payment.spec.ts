@@ -47,22 +47,22 @@ test.describe.parallel.only("New Payment test", async () => {
         await paymentPage.navigateToPaymentsPage()
 
         // click on 'add new payee' tab
-        await page.click(".ui-tabs-nav a[href$='#ui-tabs-2']")
+        await paymentPage.clickOnAddNewPayeeTab()
 
         // fill 4 inputs:
         const payeeName = "Test Payee"
-        await page.type("#np_new_payee_name", payeeName)  // payee name
-        await page.type("#np_new_payee_address", "Wall Street 5, New York") // payee address
-        await page.type("#np_new_payee_account", "Test Account")  // account
-        await page.type("#np_new_payee_details", "Test Payee")  // payee details
+        await paymentPage.fillNewPayeeForm(
+            payeeName, 
+            "Wall Street 5, New York", 
+            "Test Account", 
+            "Test Payee"
+            )
 
         // click on 'Add' button:
-        await page.click("#add_new_payee")
+        await paymentPage.clickOnAddNewPayeeButton()
 
         // check if success message appears on the screen:
-        const successMessage = await page.locator("#alert_content")
-        await expect(successMessage).toBeVisible()
-        await expect(successMessage).toHaveText("The new payee " + payeeName + " was successfully created.")
+        await paymentPage.assertNewPayeeAddedSuccesMessage(payeeName)
     })
 
     test("Should purchase foreign currency",async ({ page }) => {
@@ -70,40 +70,34 @@ test.describe.parallel.only("New Payment test", async () => {
         await paymentPage.navigateToPaymentsPage()
 
         // click on 'purchase foreign currency' tab
-        await page.click(".ui-tabs-nav a[href$='#ui-tabs-3']")
+        await paymentPage.clickOnPurchaseForeignCurrencyTab()
 
-        await page.selectOption("#pc_currency", "EUR")
+        // select currency
+        const currency = "EUR"
+        const sellrate = "1 euro (EUR) = 1.3862 U.S. dollar (USD)"
+        await paymentPage.selectCurrency(currency)
 
         // check if sell rate message appears on the screen:
-        const todaySellRate = await page.locator(".help-block > strong")
-        const exchangeCourseMessage = await page.locator("#sp_sell_rate")
-        await expect(todaySellRate).toBeVisible()
-        await expect(exchangeCourseMessage).toBeVisible()
-        await expect(todaySellRate).toHaveText("Today's Sell Rate:")
-        await expect(exchangeCourseMessage).toHaveText("1 euro (EUR) = 1.3862 U.S. dollar (USD)")
+        await paymentPage.assertTodaysSellRate(sellrate)
 
         // fill amount:
         const price = "1000"
-        await page.type("#pc_amount", price)
+        await paymentPage.fillAmountForeginCurrency(price)
 
         // click on 'dollar' radio option:
-        await page.check(".radio #pc_inDollars_true")
+        await paymentPage.selectDollarCurrency()
 
         // click on 'Calculate Costs' button:
-        await page.click("#pc_calculate_costs")        
+        await paymentPage.clickOnCalculateCosts()        
 
         // check if convert message appears on the screen:
-        const convertMessage = await page.locator("#pc_conversion_amount")
-        await expect(convertMessage).toBeVisible()
-        await expect(convertMessage).toHaveText("721.40 euro (EUR) = " + price + ".00 U.S. dollar (USD)")
+        await paymentPage.assertConversionRateMessage()
 
         // click on 'Purchase' button:
-        await page.click("#purchase_cash")
+        await paymentPage.clickOnPurchaseButton()
 
         // check if success message appears on the screen:
-        const successMessage = await page.locator("#alert_content")
-        await expect(successMessage).toBeVisible()
-        await expect(successMessage).toHaveText("Foreign currency cash was successfully purchased.")
+        await paymentPage.assertForeignCurrencySuccesMessage()
     })
 
 })
