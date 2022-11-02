@@ -3,7 +3,7 @@ import { logoutFromTestPage } from "../../helpers";
 import { HomePage } from "../../page-objects/HomePage";
 import { LoginPage } from "../../page-objects/LoginPage";
 
-test.describe.parallel.only("Login / Logout flow", () => {
+test.describe.parallel("Login / Logout flow", () => {
     let homePage: HomePage
     let loginPage: LoginPage
     // before hook:
