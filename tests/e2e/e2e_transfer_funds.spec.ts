@@ -10,12 +10,12 @@ test.describe.parallel('Transfer funds test', () => {
     // before each hook using login:
 
     test.beforeEach(async ({ page }) => {
-        homePage = new HomePage(page)
         loginPage = new LoginPage(page)
+        homePage = new HomePage(page)
 
-        homePage.loadHomePage()
-        homePage.clickOnSignInButton()
-        loginPage.login("username", "password")
+        await homePage.loadHomePage()
+        await homePage.clickOnSignInButton()
+        await loginPage.login("username", "password")  
     })
 
     test("Transfer Funds test",async ({ page }) => {
