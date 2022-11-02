@@ -23,15 +23,15 @@ export class HomePage {
     async clickOnSignInButton() {
         await this.signInButton.click()
     }
+ 
+    async clickOnFeedbackTab() {
+        await this.feedbackTab.click()
+    }
 
     async searchFor(searchCriteria: string) {
         await this.searchInput.type(searchCriteria)
         // simulating using enter from keyboard
         await this.page.keyboard.press('Enter')
-    }
-
-    async clickOnFeedbackTab() {
-        await this.feedbackTab.click()
     }
 }
 
