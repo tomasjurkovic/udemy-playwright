@@ -1,18 +1,21 @@
 import { test, expect } from '@playwright/test'
-import { loadTestHomePage } from '../../helpers'
+import { HomePage } from '../../page-objects/HomePage'
+import { LoginPage } from '../../page-objects/LoginPage'
+
 
 test.describe.parallel('Transfer funds test', () => {
+    let homePage: HomePage
+    let loginPage: LoginPage
 
     // before each hook using login:
 
     test.beforeEach(async ({ page }) => {
+        loginPage = new LoginPage(page)
+        homePage = new HomePage(page)
 
-        await loadTestHomePage(page)
-
-        await page.click('#signin_button')
-        await page.type("#user_login", "username")
-        await page.type("#user_password", "password")
-        await page.click("text=Sign in")
+        await homePage.loadHomePage()
+        await homePage.clickOnSignInButton()
+        await loginPage.login("username", "password")  
     })
 
     test("Transfer Funds test",async ({ page }) => {

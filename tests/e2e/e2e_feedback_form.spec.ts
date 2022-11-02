@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test'
 import { FeedbackPage } from '../../page-objects/FeedbackPage'
 import { HomePage } from '../../page-objects/HomePage'
 
-test.describe.parallel.only("Feedback Form", () => {
+test.describe.parallel("Feedback Form", () => {
     let homePage: HomePage
     let feedbackPage: FeedbackPage
 
