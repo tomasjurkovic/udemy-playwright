@@ -1,16 +1,19 @@
 import { test, expect } from "@playwright/test";
 import { HomePage } from '../../page-objects/HomePage';
 import { LoginPage } from '../../page-objects/LoginPage';
+import { PaymentPage } from "../../page-objects/PaymentPage";
 
 
-test.describe.parallel("New Payment test", async () => {
+test.describe.parallel.only("New Payment test", async () => {
     let homePage: HomePage
     let loginPage: LoginPage
+    let paymentPage: PaymentPage
     
     // before hook:
     test.beforeEach(async ({ page }) => {
         loginPage = new LoginPage(page)
         homePage = new HomePage(page)
+        paymentPage = new PaymentPage(page)
 
         await homePage.loadHomePage()
         await homePage.clickOnSignInButton()
@@ -19,100 +22,82 @@ test.describe.parallel("New Payment test", async () => {
 
     test("Should send new payment",async ({ page }) => {
         // go to Pay Bills tab:
-        await page.goto("http://zero.webappsecurity.com/bank/pay-bills.html") 
+        await paymentPage.navigateToPaymentsPage()
 
-        // select from dropdown:
-        await page.selectOption("#sp_payee", "apple")  // currently text value is selected instead of number
+        // sfill the form:
+        await paymentPage.fillPaySavedPayeeForm(
+            "apple", "5", "600", "2022-10-31", "This is the payment"
+        )
 
         // click on 'get payee's details button:
-        await page.click("#sp_get_payee_details")
+        await paymentPage.clickOnPayeeDetailsButton()
         
         // check if selector appears:
-        await page.waitForSelector("#sp_payee_details")
-
-        // select from dropdown:
-        await page.selectOption("#sp_account", "5")  // which is "Credit Card"
-
-        // fill the amount:
-        await page.type("#sp_amount", "600")
-
-        // using page.type to insert date's value to datepicker input field:
-        await page.type("#sp_date", "2022-10-31")
-
-        // fill the description:
-        await page.type("#sp_description", "This is the payment")
+        await paymentPage.assertPayeeDetailsAppear()
 
         // click on 'Pay' button:
-        await page.click("#pay_saved_payees")
+        await paymentPage.clickOnPayButton()
 
         // check if success message appears on the screen:
-        const successMessage = await page.locator("#alert_content > span")
-        await expect(successMessage).toBeVisible()
-        await expect(successMessage).toHaveText("The payment was successfully submitted.")
+        await paymentPage.assertPaySavedPayeeSuccesMessage()
     })
     
     test("Should add new payee",async ({ page }) => {
         // go to Pay Bills tab:
-        await page.goto("http://zero.webappsecurity.com/bank/pay-bills.html") 
+        await paymentPage.navigateToPaymentsPage()
 
         // click on 'add new payee' tab
-        await page.click(".ui-tabs-nav a[href$='#ui-tabs-2']")
+        await paymentPage.clickOnAddNewPayeeTab()
 
         // fill 4 inputs:
         const payeeName = "Test Payee"
-        await page.type("#np_new_payee_name", payeeName)  // payee name
-        await page.type("#np_new_payee_address", "Wall Street 5, New York") // payee address
-        await page.type("#np_new_payee_account", "Test Account")  // account
-        await page.type("#np_new_payee_details", "Test Payee")  // payee details
+        await paymentPage.fillNewPayeeForm(
+            payeeName, 
+            "Wall Street 5, New York", 
+            "Test Account", 
+            "Test Payee"
+            )
 
         // click on 'Add' button:
-        await page.click("#add_new_payee")
+        await paymentPage.clickOnAddNewPayeeButton()
 
         // check if success message appears on the screen:
-        const successMessage = await page.locator("#alert_content")
-        await expect(successMessage).toBeVisible()
-        await expect(successMessage).toHaveText("The new payee " + payeeName + " was successfully created.")
+        await paymentPage.assertNewPayeeAddedSuccesMessage(payeeName)
     })
 
     test("Should purchase foreign currency",async ({ page }) => {
         // go to Pay Bills tab:
-        await page.goto("http://zero.webappsecurity.com/bank/pay-bills.html") 
+        await paymentPage.navigateToPaymentsPage()
 
         // click on 'purchase foreign currency' tab
-        await page.click(".ui-tabs-nav a[href$='#ui-tabs-3']")
+        await paymentPage.clickOnPurchaseForeignCurrencyTab()
 
-        await page.selectOption("#pc_currency", "EUR")
+        // select currency
+        const currency = "EUR"
+        const sellrate = "1 euro (EUR) = 1.3862 U.S. dollar (USD)"
+        await paymentPage.selectCurrency(currency)
 
         // check if sell rate message appears on the screen:
-        const todaySellRate = await page.locator(".help-block > strong")
-        const exchangeCourseMessage = await page.locator("#sp_sell_rate")
-        await expect(todaySellRate).toBeVisible()
-        await expect(exchangeCourseMessage).toBeVisible()
-        await expect(todaySellRate).toHaveText("Today's Sell Rate:")
-        await expect(exchangeCourseMessage).toHaveText("1 euro (EUR) = 1.3862 U.S. dollar (USD)")
+        await paymentPage.assertTodaysSellRate(sellrate)
 
         // fill amount:
         const price = "1000"
-        await page.type("#pc_amount", price)
+        await paymentPage.fillAmountForeginCurrency(price)
 
         // click on 'dollar' radio option:
-        await page.check(".radio #pc_inDollars_true")
+        await paymentPage.selectDollarCurrency()
 
         // click on 'Calculate Costs' button:
-        await page.click("#pc_calculate_costs")        
+        await paymentPage.clickOnCalculateCosts()        
 
         // check if convert message appears on the screen:
-        const convertMessage = await page.locator("#pc_conversion_amount")
-        await expect(convertMessage).toBeVisible()
-        await expect(convertMessage).toHaveText("721.40 euro (EUR) = " + price + ".00 U.S. dollar (USD)")
+        await paymentPage.assertConversionRateMessage()
 
         // click on 'Purchase' button:
-        await page.click("#purchase_cash")
+        await paymentPage.clickOnPurchaseButton()
 
         // check if success message appears on the screen:
-        const successMessage = await page.locator("#alert_content")
-        await expect(successMessage).toBeVisible()
-        await expect(successMessage).toHaveText("Foreign currency cash was successfully purchased.")
+        await paymentPage.assertForeignCurrencySuccesMessage()
     })
 
 })
