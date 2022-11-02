@@ -4,7 +4,7 @@ import { LoginPage } from '../../page-objects/LoginPage';
 import { PaymentPage } from "../../page-objects/PaymentPage";
 
 
-test.describe.parallel.only("New Payment test", async () => {
+test.describe.parallel("New Payment test", async () => {
     let homePage: HomePage
     let loginPage: LoginPage
     let paymentPage: PaymentPage
