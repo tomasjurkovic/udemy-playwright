@@ -1,6 +1,7 @@
 import { expect, Locator, Page } from "@playwright/test";
+import { AbstractPage } from "./AbstractPage";
 
-export class SearchPage {
+export class SearchPage extends AbstractPage {
     // Selectors' definition:
     readonly page: Page
     readonly numberOfResults: Locator
@@ -10,6 +11,7 @@ export class SearchPage {
 
     // Init selectors using constructor:
     constructor(page: Page) {
+        super(page)
         this.page = page
         this.numberOfResults = page.locator("li > a")
         this.firstResult = page.locator("ul> li:first-child > a")

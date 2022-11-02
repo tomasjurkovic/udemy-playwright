@@ -1,6 +1,7 @@
 import { expect, Locator, Page } from "@playwright/test";
+import { AbstractPage } from "./AbstractPage";
 
-export class PaymentPage {
+export class PaymentPage extends AbstractPage {
     // Selectors' definition:
     readonly page: Page
         // tabs:
@@ -48,6 +49,7 @@ export class PaymentPage {
 
     // Init selectors using constructor:
     constructor(page: Page) {
+        super(page)
         this.page = page
 
         this.paySavedPayeeTab = page.locator(".ui-tabs-nav a[href$='#ui-tabs-1']")
