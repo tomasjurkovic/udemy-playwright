@@ -3,7 +3,7 @@ import { logoutFromTestPage } from "../../helpers";
 import { HomePage } from "../../page-objects/HomePage";
 import { LoginPage } from "../../page-objects/LoginPage";
 
-test.describe.parallel("Login / Logout flow", () => {
+test.describe.parallel.only("Login / Logout flow", () => {
     let homePage: HomePage
     let loginPage: LoginPage
     // before hook:
@@ -18,6 +18,8 @@ test.describe.parallel("Login / Logout flow", () => {
     test("Negative scenario for login", async ({ page }) => {
         await homePage.clickOnSignInButton()
         await loginPage.login("invalid_username", "invalid_password")
+        await loginPage.wait(100) 
+        // here it is just for demonstration, that I can use function from in my login tests
 
         // assert error message:
         await loginPage.assertErrorMessage()
