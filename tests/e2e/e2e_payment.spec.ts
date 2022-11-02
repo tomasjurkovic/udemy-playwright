@@ -1,16 +1,19 @@
 import { test, expect } from "@playwright/test";
 import { HomePage } from '../../page-objects/HomePage';
 import { LoginPage } from '../../page-objects/LoginPage';
+import { PaymentPage } from "../../page-objects/PaymentPage";
 
 
-test.describe.parallel("New Payment test", async () => {
+test.describe.parallel.only("New Payment test", async () => {
     let homePage: HomePage
     let loginPage: LoginPage
+    let paymentPage: PaymentPage
     
     // before hook:
     test.beforeEach(async ({ page }) => {
         loginPage = new LoginPage(page)
         homePage = new HomePage(page)
+        paymentPage = new PaymentPage(page)
 
         await homePage.loadHomePage()
         await homePage.clickOnSignInButton()
@@ -19,41 +22,29 @@ test.describe.parallel("New Payment test", async () => {
 
     test("Should send new payment",async ({ page }) => {
         // go to Pay Bills tab:
-        await page.goto("http://zero.webappsecurity.com/bank/pay-bills.html") 
+        await paymentPage.navigateToPaymentsPage()
 
-        // select from dropdown:
-        await page.selectOption("#sp_payee", "apple")  // currently text value is selected instead of number
+        // sfill the form:
+        await paymentPage.fillPaySavedPayeeForm(
+            "apple", "5", "600", "2022-10-31", "This is the payment"
+        )
 
         // click on 'get payee's details button:
-        await page.click("#sp_get_payee_details")
+        await paymentPage.clickOnPayeeDetailsButton()
         
         // check if selector appears:
-        await page.waitForSelector("#sp_payee_details")
-
-        // select from dropdown:
-        await page.selectOption("#sp_account", "5")  // which is "Credit Card"
-
-        // fill the amount:
-        await page.type("#sp_amount", "600")
-
-        // using page.type to insert date's value to datepicker input field:
-        await page.type("#sp_date", "2022-10-31")
-
-        // fill the description:
-        await page.type("#sp_description", "This is the payment")
+        await paymentPage.assertPayeeDetailsAppear()
 
         // click on 'Pay' button:
-        await page.click("#pay_saved_payees")
+        await paymentPage.clickOnPayButton()
 
         // check if success message appears on the screen:
-        const successMessage = await page.locator("#alert_content > span")
-        await expect(successMessage).toBeVisible()
-        await expect(successMessage).toHaveText("The payment was successfully submitted.")
+        await paymentPage.assertPaySavedPayeeSuccesMessage()
     })
     
     test("Should add new payee",async ({ page }) => {
         // go to Pay Bills tab:
-        await page.goto("http://zero.webappsecurity.com/bank/pay-bills.html") 
+        await paymentPage.navigateToPaymentsPage()
 
         // click on 'add new payee' tab
         await page.click(".ui-tabs-nav a[href$='#ui-tabs-2']")
@@ -76,7 +67,7 @@ test.describe.parallel("New Payment test", async () => {
 
     test("Should purchase foreign currency",async ({ page }) => {
         // go to Pay Bills tab:
-        await page.goto("http://zero.webappsecurity.com/bank/pay-bills.html") 
+        await paymentPage.navigateToPaymentsPage()
 
         // click on 'purchase foreign currency' tab
         await page.click(".ui-tabs-nav a[href$='#ui-tabs-3']")

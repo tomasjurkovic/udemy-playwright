@@ -111,7 +111,7 @@ export class PaymentPage {
     }
 
     async fillDescription(description: string) {
-        await this.amountInput.type(description)
+        await this.descriptionInput.type(description)
     }
 
     async fillPaySavedPayeeForm(
@@ -138,7 +138,7 @@ export class PaymentPage {
     }
 
     async assertPayeeDetailsAppear() {
-        await expect(this.paySavedPayeeSuccessMessage).toBeVisible()
+        await expect(this.payeeDetails).toBeVisible()
     }
 
     async assertPaySavedPayeeSuccesMessage() {
