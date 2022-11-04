@@ -131,5 +131,10 @@ test.describe.parallel("API Testing", () => {
         expect(responseBody.job).toBe("footballer")  // assert job
 
     })
+
+    test("DELETE REQUEST - Delete User", async ({ request }) => {
+        const response = await request.delete(`${baseUrl}/users/2`)  // no second argument
+        expect(response.status()).toBe(204) // for successfully deleted user status is 204
+    })
 })
 
