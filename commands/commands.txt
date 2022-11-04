@@ -22,3 +22,9 @@ and then one of these:
 --reporter=dot - only data in one row are reported, not very useful
 --reporter=junit - it will create xml format, which can be extracted or used in monitoring services
 --reporter=html = it exports html report, which is clicable and gives most details, good one for debugging
+
+run visual tests:
+npx playwright test --config=visual.config.ts --project=webkit - runs tests in visual folder
+// or we can use firefox/chromium as well
+npx playwright test --config=visual.config.ts --project=webkit --update-snapshots
+
