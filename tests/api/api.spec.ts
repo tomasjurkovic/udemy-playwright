@@ -114,5 +114,22 @@ test.describe.parallel("API Testing", () => {
         expect(responseBody.error).toBeTruthy()  // assert that error is returned in response
         expect(responseBody.error).toBe("Missing email or username")
     })
+
+    test("PUT REQUEST - Update User", async ({ request }) => {
+        const response = await request.put(`${baseUrl}/users/2`, {
+            data: {
+                "name": "Gabriel Jesus",
+                "job": "footballer"
+            }
+        })
+        expect(response.status()).toBe(200) // for updated user status is 200
+        
+        const responseBody = JSON.parse(await response.text())
+        console.log(responseBody)
+        expect(responseBody.updatedAt).toBeTruthy()  // assert that error is returned in response
+        expect(responseBody.name).toBe("Gabriel Jesus")  // assert name
+        expect(responseBody.job).toBe("footballer")  // assert job
+
+    })
 })
 
