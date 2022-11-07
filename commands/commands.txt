@@ -28,3 +28,17 @@ npx playwright test --config=visual.config.ts --project=webkit - runs tests in v
 // or we can use firefox/chromium as well
 npx playwright test --config=visual.config.ts --project=webkit --update-snapshots
 
+open playwright:
+npx playwright open - opens empty browser
+npx playwright open --device="iPhone 11" wikipedia.org - opens iPhone 11 simalated browser and navigates to the wikipedia website as selected
+
+we can use playwright to convert web pages to PDF files:
+npx playwright pdf https://www.example.com my-file.pdf - it navigates to selected page and convert it to the pdf file with selected name
+
+screenshots:
+npx playwright screenshot --device="iPhone 12" --color-scheme=dark --wait-for-timeout=3000 twitter.com twitter-img.png
+- it allows us to screenshot and save it. This navigates to twitter using iPhone 12 device and dark theme. image is saved with selected name
+
+timezones:
+npx playwright open --timezone="Europe/Rome" --lang="it-IT" google.com
+- it opens browser with specific timezone and language
