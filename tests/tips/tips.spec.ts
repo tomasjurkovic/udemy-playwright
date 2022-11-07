@@ -18,4 +18,12 @@ test.describe.only("Tips and tricks section", () => {
         // by adding test.skip, this test will not run if browser is chrome, but it runs in all other browsers
         await page.goto("https://www.example.com")
     })
+
+    test("Test Fixme Annotation", async ({ page, browserName }) => {
+        test.fixme(browserName === "chromium", "Test is not stable, needs revision")
+        // by adding test.fixme, this indicates problem with test code itselfy, common practice
+        // test is skipped in chromium browser (because it is selected)
+        // we can specified env. variable or any other condition
+        await page.goto("https://www.example.com")
+    })
 })
