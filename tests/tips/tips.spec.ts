@@ -30,12 +30,21 @@ test.describe.only("Tips and tricks section", () => {
     // this is how I can create parametrized test 
     const people = ["Mike", "Judy", "Peter", "Elon", "Alice"]
     for(const name of people) {
-        test.only(`Running test for ${name}`, async ({ page }) => {
+        test(`Running test for ${name}`, async ({ page }) => {
             // test will run 5 times, and tries searching with 5 different names from the list
             await page.goto("http://zero.webappsecurity.com/index.html")
             await page.type("#searchTerm", name)
             await page.waitForTimeout(3000)
         })
     }
+
+    test.only("Mouse Movement Simulation", async ({ page }) => {
+        await page.goto("https://www.example.com")
+        await page.mouse.move(0, 0)
+        await page.mouse.down()
+        await page.mouse.move(0, 100)
+        await page.mouse.up()
+        // it enables movements with mouse
+    })
    
 })
