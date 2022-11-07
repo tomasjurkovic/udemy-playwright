@@ -38,13 +38,25 @@ test.describe.only("Tips and tricks section", () => {
         })
     }
 
-    test.only("Mouse Movement Simulation", async ({ page }) => {
+    test("Mouse Movement Simulation", async ({ page }) => {
         await page.goto("https://www.example.com")
         await page.mouse.move(0, 0)
         await page.mouse.down()
         await page.mouse.move(0, 100)
         await page.mouse.up()
         // it enables movements with mouse
+    })
+
+    test.only("Multiple browser tabs inside one browser", async ({ browser }) => {
+        // this is how we create browser context in tests:
+        const context = await browser.newContext()
+        const page1 = await context.newPage()
+        const page2 = await context.newPage()
+        const page3 = await context.newPage()
+        await page1.goto("https://www.example.com")
+        await page2.goto("https://www.google.com")
+        await page3.goto("https://www.udemy.com")
+        await page1.waitForTimeout(5000)
     })
    
 })
