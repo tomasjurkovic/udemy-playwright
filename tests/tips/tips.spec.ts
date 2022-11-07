@@ -1,9 +1,13 @@
 import { test, expect } from "@playwright/test";
+import { getRandomNumber } from "../../utils/data-helpers"
 
 test.describe.only("Tips and tricks section", () => {
 
-    test("TestInfo Object", async ({ page }, testInfo ) => {
+    test.only("TestInfo Object", async ({ page }, testInfo ) => {
         await page.goto("https://www.example.com")
+
+        let randomNumber = await getRandomNumber()
+        console.log(randomNumber)
 
         // console.log(testInfo)
         // by adding testInfo after the page, I can get lot of info about my test
@@ -47,7 +51,7 @@ test.describe.only("Tips and tricks section", () => {
         // it enables movements with mouse
     })
 
-    test.only("Multiple browser tabs inside one browser", async ({ browser }) => {
+    test("Multiple browser tabs inside one browser", async ({ browser }) => {
         // this is how we create browser context in tests:
         const context = await browser.newContext()
         const page1 = await context.newPage()
