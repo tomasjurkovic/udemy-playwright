@@ -26,4 +26,16 @@ test.describe.only("Tips and tricks section", () => {
         // we can specified env. variable or any other condition
         await page.goto("https://www.example.com")
     })
+
+    // this is how I can create parametrized test 
+    const people = ["Mike", "Judy", "Peter", "Elon", "Alice"]
+    for(const name of people) {
+        test.only(`Running test for ${name}`, async ({ page }) => {
+            // test will run 5 times, and tries searching with 5 different names from the list
+            await page.goto("http://zero.webappsecurity.com/index.html")
+            await page.type("#searchTerm", name)
+            await page.waitForTimeout(3000)
+        })
+    }
+   
 })
