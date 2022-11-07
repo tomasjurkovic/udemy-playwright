@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { getRandomNumber } from "../../utils/data-helpers"
+import { getRandomNumber, getRandomString } from "../../utils/data-helpers"
 
 test.describe.only("Tips and tricks section", () => {
 
@@ -7,7 +7,10 @@ test.describe.only("Tips and tricks section", () => {
         await page.goto("https://www.example.com")
 
         let randomNumber = await getRandomNumber()
+        let randomString = await getRandomString()
+
         console.log(randomNumber)
+        console.log(randomString)
 
         // console.log(testInfo)
         // by adding testInfo after the page, I can get lot of info about my test
