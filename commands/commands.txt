@@ -28,3 +28,8 @@ npx playwright test --config=visual.config.ts --project=webkit - runs tests in v
 // or we can use firefox/chromium as well
 npx playwright test --config=visual.config.ts --project=webkit --update-snapshots
 
+open playwright:
+npx playwright open - opens empty browser
+npx playwright open --device="iPhone 11" wikipedia.org - opens iPhone 11 simalated browser and navigates to the wikipedia website as selected
+
+
