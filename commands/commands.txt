@@ -32,4 +32,7 @@ open playwright:
 npx playwright open - opens empty browser
 npx playwright open --device="iPhone 11" wikipedia.org - opens iPhone 11 simalated browser and navigates to the wikipedia website as selected
 
+we can use playwright to convert web pages to PDF files:
+npx playwright pdf https://www.example.com my-file.pdf - it navigates to selected page and convert it to the pdf file with selected name
+
 
